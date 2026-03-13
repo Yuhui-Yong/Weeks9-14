@@ -26,7 +26,11 @@ public class ControllerInput : MonoBehaviour
 
     public void OnAttack(InputAction.CallbackContext context)
     {
-        Debug.Log("Attack Time( " + context.phase + " ) !");
+        if(context.performed)
+        {
+            Debug.Log("Attack Time( " + context.phase + " ) !");
+            //string x = "cat" + " " + "dog"; // = "cat dog";
+        }
     }
 
     public void OnPoint(InputAction.CallbackContext context)
