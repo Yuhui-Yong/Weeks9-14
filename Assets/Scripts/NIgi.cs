@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 
 public class NIgi : MonoBehaviour
@@ -11,39 +12,60 @@ public class NIgi : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("index");
+        // Debug.Log("index");
 
-        if (index == TheHero.Length - 1) // I cannot just set to TheHero.Length because it cannot detect the elements I have since it starts from the zero, which means
-            // it goes from 0, 1, 2, 3 and 4 but there is no 5, so I had to subtract by 1.
-        {
-            index = 0; // So, if index is equal to zero, it will go to spriteRenderer.sprite = TheHero[index];, which is the original sprite, like the object that I have.
-        }
-        else
-        {
-            index++; // Otherwise, it will keep running like adding one, so it will like animate it.
-        }
+        // if (index == TheHero.Length - 1) // I cannot just set to TheHero.Length because it cannot detect the elements I have since it starts from the zero, which means
+        // it goes from 0, 1, 2, 3 and 4 but there is no 5, so I had to subtract by 1.
+        // {
+        // index = 0; // So, if index is equal to zero, it will go to spriteRenderer.sprite = TheHero[index];, which is the original sprite, like the object that I have.
+        // }
+        // else
+        // {
+        // index++; // Otherwise, it will keep running like adding one, so it will like animate it.
+        // }
 
-        spriteRenderer.sprite = TheHero[index];
+        // spriteRenderer.sprite = TheHero[index];
     }
 
-    public void ChangeSprite()
+    public void ChangeSprite(InputAction.CallbackContext context)
     {
-
-        if (index == TheHero.Length - 1)
+        if (context.performed) // This is the one that only performe when it press the button. The reason why I put this is because when I presses the E button, the InputSystem
+            // was taking 3 actions, which are pressing, holding and releasing, so it did not look, the character action goes one by one by pressing the E button. So, by writing this
+            // code, it only perform the pressed action, so it goes only one by one, which I wanted it to be.
         {
-            index = 0;
-        }
-        else
-        {
-            index++;
-        }
+            Debug.Log("PleaseWork");
 
-        spriteRenderer.sprite = TheHero[index];
+            Debug.Log(index);
+
+            if (index == TheHero.Length - 1)
+            {
+                index = 0;
+            }
+            else
+            {
+                index++;
+            }
+
+            spriteRenderer.sprite = TheHero[index];
+
+            // Debug.Log(index);
+
+            // if (index == TheHero.Length - 1)
+            // {
+                // index = 0;
+            // }
+            // else
+            // {
+                // index++;
+            // }
+
+            // spriteRenderer.sprite = TheHero[index];
+        }
     }
 }
