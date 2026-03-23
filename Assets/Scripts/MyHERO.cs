@@ -32,3 +32,4 @@ public class MyHERO : MonoBehaviour
             yield return null;
         }
     }
+}
