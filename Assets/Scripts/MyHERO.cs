@@ -11,13 +11,13 @@ public class MyHERO : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     private IEnumerator MyheroMoveUpdate()
@@ -29,6 +29,6 @@ public class MyHERO : MonoBehaviour
         {
             progress += Time.deltaTime;
             transform.localPosition = Anime.Evaluate(progress / duration) * Vector3.one;
+            yield return null;
         }
-        yield return null;
     }
