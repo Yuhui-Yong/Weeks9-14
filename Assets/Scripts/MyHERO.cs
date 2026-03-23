@@ -32,4 +32,10 @@ public class MyHERO : MonoBehaviour
             yield return null;
         }
     }
+
+    public void OnPressMove()
+    {
+        MoveMyhero = StartCoroutine(MyheroMoveUpdate());
+    }
+
 }
