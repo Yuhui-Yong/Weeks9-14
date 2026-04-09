@@ -9,6 +9,7 @@ public class KnightScript : MonoBehaviour
 
     public float xMovement;
     public Animator KnightAnimator;
+    public Vector2 moveDIrection;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -19,7 +20,7 @@ public class KnightScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position += new Vector3(xMovement, 0f, 0f) * speed * Time.deltaTime;
+        transform.position += (Vector3)moveDIrection * speed * Time.deltaTime;
     }
 
     public void footsteps()
@@ -33,10 +34,10 @@ public class KnightScript : MonoBehaviour
     {
         Debug.Log(context.phase);
 
-        Vector2 moveDIrection = context.ReadValue<Vector2>();
-        xMovement = moveDIrection.x;
+        moveDIrection = context.ReadValue<Vector2>();
 
         bool IsRunning = xMovement != 0f;
+
 
         KnightAnimator.SetBool("IsRunning", IsRunning);
 
