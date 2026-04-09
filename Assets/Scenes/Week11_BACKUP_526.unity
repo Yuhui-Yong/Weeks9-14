@@ -576,6 +576,7 @@ MonoBehaviour:
     m_ActionId: 15cef263-9014-4fd5-94d9-4e4a6234a6ef
     m_ActionName: 'UI/Cancel[/Keyboard/escape]'
   - m_PersistentCalls:
+<<<<<<< HEAD
       m_Calls:
       - m_Target: {fileID: 1039009875}
         m_TargetAssemblyTypeName: Detector, Assembly-CSharp
@@ -590,6 +591,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
 =======
+      m_Calls: []
 >>>>>>> origin/Week_11_Class
     m_ActionId: 32b35790-4ed0-4e9a-aa41-69ac6d629449
     m_ActionName: 'UI/Point[/Mouse/position]'
