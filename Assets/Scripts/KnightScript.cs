@@ -8,39 +8,36 @@ public class KnightScript : MonoBehaviour
     public float speed;
 
     public float xMovement;
-    public Animator KnightAnimator;
-    public Vector2 moveDIrection;
+
+    public Animator knightAnimator;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.position += (Vector3)moveDIrection * speed * Time.deltaTime;
+        transform.position += new Vector3(xMovement, 0f, 0f) * speed * Time.deltaTime;
     }
 
-    public void footsteps()
+    public void OnFootstep()
     {
         Debug.Log("Footstep");
 
         audioSource.Play();
     }
 
-    public void onMove(InputAction.CallbackContext context)
+    public void OnMove(InputAction.CallbackContext context)
     {
-        Debug.Log(context.phase);
-
-        moveDIrection = context.ReadValue<Vector2>();
+        Vector2 moveDirection = context.ReadValue<Vector2>();
+        xMovement = moveDirection.x;
 
         bool IsRunning = xMovement != 0f;
 
-
-        KnightAnimator.SetBool("IsRunning", IsRunning);
-
-        // transform.position += new Vector3(xMovement, 0f, 0f) * speed * Time.deltaTime;
+        knightAnimator.SetBool("isRunning", IsRunning);
     }
+
 }
