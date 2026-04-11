@@ -7,12 +7,13 @@ using UnityEngine.UIElements;
 public class KnightScript : MonoBehaviour
 {
 
-    public AudioSource audioSource;
-    public float speed;
+    public AudioSource audioSource; // This is for Audio.
+    public float speed; // For speed.
 
-    public float xMovement;
+    public float xMovement; // For movement but only x cause it doesn't make sense to have y movement with the character I am using with the animation because it only appears going
+    // right direction.
 
-    public Animator knightAnimator;
+    public Animator knightAnimator; // The Animator obviosuly.
 
     public SpriteRenderer spriteRenderer; // I am calling the sprite in the inspector.
     public Sprite[] TheHero; // I am making it have an array of the name TheHero.
@@ -21,14 +22,13 @@ public class KnightScript : MonoBehaviour
     public Color damageColour;
     private Color playerColour;
 
-    public Sprite Yuhui;
-    public Sprite YuhuiDamage;
+    public Sprite Yuhui; // I am calling the Sprite. This is the original sprite.
+    public Sprite YuhuiDamage; // I am calling the Sprite. This is when it takes damage it is gon appear this sprite.
 
-    public int damage;
-    public Rock rock;
+    public int damage; // This is for the damage.
+    public Rock rock; // I am calling the script as well so that it can scan.
 
-    public IEnumerator pauseCoroutine;
-
+    public IEnumerator pauseCoroutine; // This is the Coroutine,
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -40,32 +40,18 @@ public class KnightScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        spriteRenderer.sprite = TheHero[index];
+        spriteRenderer.sprite = TheHero[index]; 
         transform.position += new Vector3(xMovement, 0f, 0f) * speed * Time.deltaTime;
-
-        // Debug.Log("index");
-
-        // if (index == TheHero.Length - 1) // I cannot just set to TheHero.Length because it cannot detect the elements I have since it starts from the zero, which means
-        // it goes from 0, 1, 2, 3 and 4 but there is no 5, so I had to subtract by 1.
-        // {
-        // index = 0; // So, if index is equal to zero, it will go to spriteRenderer.sprite = TheHero[index];, which is the original sprite, like the object that I have.
-        // }
-        // else
-        // {
-        // index++; // Otherwise, it will keep running like adding one, so it will like animate it.
-        // }
-
-        // spriteRenderer.sprite = TheHero[index];
     }
 
-    public void OnFootstep()
+    public void OnFootstep() // This is just for the audio.
     {
         Debug.Log("Footstep");
 
         audioSource.Play();
     }
 
-    public void OnMove(InputAction.CallbackContext context)
+    public void OnMove(InputAction.CallbackContext context) // This is for moving left and right.
     {
         Vector2 moveDirection = context.ReadValue<Vector2>();
         xMovement = moveDirection.x;
@@ -75,17 +61,29 @@ public class KnightScript : MonoBehaviour
         knightAnimator.SetBool("isRunning", IsRunning);
     }
 
-    public void OnAttack(InputAction.CallbackContext context)
+    public void OnAttack(InputAction.CallbackContext context) // This is for attaking 
     {
-        if (context.started)
+        if (context.started) // I first wrote a code with if (context.performed), but it didn' work. So, eventually I just wrote "started" instead of perfoermed. But, it is not how
+            // I figured out. Like I don't know why performed didn't work and why started worked. But, somehow I just figured out putting "started".
         {
-            if (pauseCoroutine != null)
-            {
+            if (pauseCoroutine != null) // what this thing does is if I click the mouse, which is context.started, it is going to check if pauseCoroutine is not equal to nothing. And,
+                // it it is not equal to nothing, it is going to StopCoroutine(pauseCoroutine) and the pause Coroutine is PauseAnime. and the PauseAnime is
+                // this:
+                
+                // public IEnumerator PauseAnime()
+                // {
+                    // knightAnimator.SetBool("isAttacking", true);
+
+                    // yield return new WaitForSeconds(0.5f);
+
+                    // knightAnimator.SetBool("isAttacking", false);
+
+                    {
                 StopCoroutine(pauseCoroutine);
-                index = 0;
+                index = 0; // This thing makes it zero so that it can start from zero again.
             }
-            pauseCoroutine = PauseAnime();
-            StartCoroutine(pauseCoroutine);
+            pauseCoroutine = PauseAnime(); // Pause Coroutine is for Pasuing Animation that the HeroKnight have.
+            StartCoroutine(pauseCoroutine); // Now, it is going to startCoroutine.
         }
     }
 
@@ -103,78 +101,58 @@ public class KnightScript : MonoBehaviour
             Debug.Log("PleaseWork");
 
             Debug.Log(index);
-            if(pauseCoroutine != null)
+
+            if(pauseCoroutine != null) // So, now here I am calling pauseCoroutine, which is PauseAnime, so it is just PauseAnime, named as pauseCoroutine. what this does is that
+                // if 
             {
                 StopCoroutine(pauseCoroutine);
                 index = 0;
             }
-            pauseCoroutine = PauseAnime();
-            StartCoroutine(pauseCoroutine);
-
-            //if (index == TheHero.Length - 1)
-            //{
-            //    index = 0;
-            //}
-            //else
-            //{
-            //    index++;
-            //}
+            pauseCoroutine = PauseAnime(); // This is just for naming PauseAnime as something, like making a variable.
+            StartCoroutine(pauseCoroutine); // This is going to start PauseAnime, which is pauseCoroutine.
 
             spriteRenderer.sprite = TheHero[index];
-
-            // Debug.Log(index);
-
-            // if (index == TheHero.Length - 1)
-            // {
-            // index = 0;
-            // }
-            // else
-            // {
-            // index++;
-            // }
-
-            // spriteRenderer.sprite = TheHero[index];
         }
     }
-    public void ApplyDamage()
+    public void ApplyDamage() // This is for the Applying Damage.
     {
         rock.TakeDamage(damage);
     }
 
-    public void ChangePlayerColor()
+    public void ChangePlayerColor() // This is for changing the colour when it gets hit.
     {
         SpriteRenderer playerRenderer = rock.GetComponent<SpriteRenderer>();
         playerColour = playerRenderer.color;
         playerRenderer.color = damageColour;
     }
 
-    public void OriginalPlayerColour()
+    public void OriginalPlayerColour() // This is for setting Original PlayerColour when it is not getting any damage.
     {
         SpriteRenderer playerRenderer = rock.GetComponent<SpriteRenderer>();
         playerRenderer.color = playerColour;
     }
 
-    public void ChangeYuhuiSprite()
+    public void ChangeYuhuiSprite() // This is for the changing the sprite when it gets hit.
     {
         SpriteRenderer playerRenderer = rock.GetComponent<SpriteRenderer>();
         Yuhui = playerRenderer.sprite;
         playerRenderer.sprite = YuhuiDamage;
     }
 
-    public void OriginalYuhuiSprite()
+    public void OriginalYuhuiSprite() // This is for setting Original Sprite when it is not getting any damage.
     {
         SpriteRenderer playerRenderer = rock.GetComponent<SpriteRenderer>();
         playerRenderer.sprite = Yuhui;
 
     }
 
-    public IEnumerator PauseAnime()
+    public IEnumerator PauseAnime() // Here, this is called PauseAnime. And what this does is that if I call this it sets the bool for isAttacking true, and wait for 0.5seconds,
+                                    // then it sets isAttacking false and it never goes back.
     {
         knightAnimator.SetBool("isAttacking", true);
-        
+
         yield return new WaitForSeconds(0.5f);
 
         knightAnimator.SetBool("isAttacking", false);
     }
-
 }
